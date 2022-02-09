@@ -4,7 +4,7 @@ agent any
 stages{
 	stage("git checkout"){
 		steps{
-		
+			git branch: 'main', credentialsId: 'gituser', url: 'https://github.com/vinayakanu/super.git'
 		}
 	}
 	stage("maven build"){
