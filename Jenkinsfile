@@ -10,18 +10,19 @@ stages{
 	stage("maven build"){
 		steps{
 			sh "mvn clean package"
-			sh "mv target/*.war webapps/webapp.war"
+			sh "mv target/*.war target/webapp.war"
 		}
 	}
 	stage("deploy"){
 		steps{
-			sh "scp target/webapp.war tomcat@ipadress target/webapp.war"
+			sshagent(['tomcat-new']) {
+				sh "scp -o StrictHostKeyChecking=no target/webapp.war ec2-user@172.31.41.138:/opt/tomcat/webapps/"
 			
-			sh "ssh ec2-user@ipaddr /opt/tomcat/bin/shutdown.sh"
+				sh "ssh ec2-user@172.31.41.138 /opt/tomcat/bin/shutdown.sh"
 
-			sh "ssh ec2-user@ipaddr /opt/tomcat/bin/startup.sh"
+				sh "ssh ec2-user@172.31.41.138 /opt/tomcat/bin/startup.sh"
+			}
 		}
-
 	}
 }
 }
