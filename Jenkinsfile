@@ -18,9 +18,9 @@ stages{
 			sshagent(['tomcat-new']) {
 				sh "scp -o StrictHostKeyChecking=no target/webapp.war ec2-user@172.31.41.138:/opt/tomcat/webapps/"
 			
-				sh "ssh ec2-user@172.31.41.138 /home/ec2-user/tomcatstopme.sh"
+				sh "ssh ec2-user@172.31.41.138 /tmp/tomcatstop.sh"
 
-				sh "ssh ec2-user@172.31.41.138 /opt/tomcat/bin/tomcatstartme.sh"
+				sh "ssh ec2-user@172.31.41.138 /tmp/tomcatstart.sh"
 			}
 		}
 	}
